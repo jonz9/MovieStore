@@ -1,9 +1,46 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+</script>
 
 <template>
   <div id="header-container">
-    <h2>Welcome to moviestore</h2>
+    <h1>Welcome to MovieStore!</h1>
+    <button class="loginButton" @click="router.push('/login')">LOGIN</button>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: antiquewhite;
+}
+
+#header-container {
+  width: 100vw;
+  height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  background-color: #001011;
+}
+
+.loginButton {
+  height: 3em;
+  width: 6em;
+  border-radius: 8%;
+  background-color: antiquewhite;
+}
+
+.loginButton:hover {
+  background-color: #a3f0f6;
+  transition: 0.4s;
+}
+</style>

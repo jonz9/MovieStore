@@ -4,7 +4,6 @@ import Hero from "../components/Hero.vue";
 import Footer from "../components/Footer.vue";
 import axios from "axios";
 import { useStore } from "../stores/index.js";
-
 </script>
 
 <template>
