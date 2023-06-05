@@ -19,12 +19,21 @@ const movieData = (
   <Teleport to="body">
     <div class="modal-page" @click.self="$emit('toggleModal')">
       <div class="modal-container">
-        <button @click="$emit('toggleModal')">X</button>
-        <div v-if="movieData">
+        <button class="exit-button" @click="$emit('toggleModal')">X</button>
+        <div class="movie" v-if="movieData">
           <img :src="`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`" />
-          <h1>{{ movieData.title }}</h1>
-          <h2>{{ movieData.release_date }}</h2>
-          <h3 @click="store.addToCart(movieData.poster_path, movieData.title)">Buy</h3>
+          <div class="movie-info">
+            <h1 id="title">{{ movieData.title }}</h1>
+            <br>
+            <h4>Average Score:{{ movieData.vote_average }}</h4>
+            <h4>Runtime: {{ movieData.runtime }}</h4>
+            <h4>Revenue: ${{ movieData.revenue }}</h4>
+            <h4>Release Date: {{ movieData.release_date }}</h4>
+            <h4>Genre: {{ movieData.genres[0].name }}</h4>
+            <br>
+            <p>Synopsis: {{ movieData.overview }}</p>
+            <button class="buy-button" @click="store.addToCart(movieData.poster_path, movieData.title)">Buy</button>
+          </div>
         </div>
       </div>
     </div>
@@ -44,23 +53,59 @@ const movieData = (
   z-index: 5;
 }
 
+.modal-container {
+  border-radius: 0.5em;
+  border-color: antiquewhite;
+  border-style: double;
+}
+
+.movie {
+  display: flex;
+  padding: 0.2em;
+}
+
+#title {
+  text-decoration: underline;
+}
+
+.movie-info {
+  padding: 1em;
+}
+
 .modal-page .modal-container {
-  background-color: #3b444b;
+  background-color: #010909;
   width: clamp(280px, 100%, 900px);
   height: 50vh;
   position: relative;
+  color: antiquewhite;   
 }
 
-.modal-page .modal-container button {
+.exit-button {
   position: absolute;
   right: 0px;
   padding: 1rem;
   border: none;
-  background: #3b444b;
+  background: #b40000;
   font-weight: bold;
+  border-radius: 5%;
+}
+
+.buy-button {
+  position: absolute;
+  bottom: 1em;
+  padding: 1em 2em 1em 2em;
+  border-radius: 5%;
+  border-color: #010909;
+  background-color: aquamarine;
+}
+
+.buy-button:hover {
+  cursor: pointer;
+  background-color: rgb(26, 138, 101);
+  transition: 0.4s;
 }
 
 img {
-  width: 200px;
+  width: 230px;
 }
 </style>

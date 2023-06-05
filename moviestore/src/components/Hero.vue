@@ -11,7 +11,7 @@
 <style scoped>
 #hero-container {
   width: 100vw;
-  height: 75vh;
+  height: 80vh;
   display: flex;
   background-color: #093A3E;
   justify-content: center;

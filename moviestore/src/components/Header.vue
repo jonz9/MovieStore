@@ -24,7 +24,7 @@ h1 {
 
 #header-container {
   width: 100vw;
-  height: 20vh;
+  height: 15vh;
   display: flex;
   align-items: center;
   justify-content: space-between;
