@@ -5,14 +5,12 @@ import { ref } from 'vue';
 const router = useRouter();
 const user = ref("");
 const password = ref("");
-const test = ref(true);
 
 const login = () => {
-  if (user === 'tmdb' && password === 'movies') {
-    router.push("/movies");
-  } 
-  else {
-    console.log("error");
+  if (user.value === "tmdb" && password.value === "movies") {
+    router.push('/movies');
+  } else {
+    alert("Invalid!");
   }
 }
 </script>
@@ -21,17 +19,17 @@ const login = () => {
   <div id="login-page">
     <div class="login-container">
       <h1>LOGIN</h1>
-      <form method="post">
+      <form @submit.prevent="login()">
         <div class="input-field">
-          <input type="text" placeholder="tmdb" required v-model="user" />
+          <input type="text" placeholder="tmdb" v-model="user" required />
           <label>Username</label>
         </div>
         <div class="input-field">
-          <input type="text" placeholder="movies" required v-model="password" />
+          <input type="text" placeholder="movies" v-model="password" required />
           <label>Password</label>
         </div>
         <div class="login-buttons">
-          <input class="buttons" type="submit" value="login" />
+          <input class="buttons" type="submit" value="Login" />
           <button class= "buttons" @click="router.push('/')">Back</button>
         </div>
       </form>
