@@ -31,8 +31,8 @@ const login = () => {
           <label>Password</label>
         </div>
         <div class="login-buttons">
-          <input type="submit" value="Login" />
-          <button @click="router.push('/')">Back</button>
+          <input class="buttons" type="submit" value="login" />
+          <button class= "buttons" @click="router.push('/')">Back</button>
         </div>
       </form>
     </div>    
@@ -43,7 +43,7 @@ const login = () => {
 #login-page {
   height: 100vh;
   width: 100vw;
-  background: linear-gradient(120deg, #1d4548, #0a9595);
+  background: linear-gradient(120deg, #05292c, #0a9595);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -56,14 +56,36 @@ const login = () => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 10%;
+  border-radius: 8%;
   background-color: #cdf9fb;
   font-family: montserrat;
-
+  border-color: #010303;
+  border-style: double;
+  border-width: 0.5em;
+  box-shadow: 4px 4px rgb(0, 0, 0);
 }
 
 .input-field {
   display: flex;
+  padding: 0.2em;
   gap: 0.2em;
+}
+
+.login-buttons {
+  display: flex;
+  padding: 0.2em;
+  gap: 0.5em;
+}
+
+input[type=text] {
+  height: 25px;
+}
+
+.buttons {
+  height: 25px;
+  width: 50px;
+  background-color: #1d4548;
+  color: antiquewhite;
+  border-radius: 10%;
 }
 </style>
