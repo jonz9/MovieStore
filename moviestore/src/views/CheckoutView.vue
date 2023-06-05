@@ -44,7 +44,7 @@ img {
 }
 
 .movie-checkout {
-  margin: 20px;  
+  margin: 20px;
 }
 
 .back-button {
@@ -57,26 +57,4 @@ img {
   background-color: #3d98a0;
   border-radius: 5%;
 }
-
-/* img {
-  height: 15em;
-}
-
-.buy {
-  display: grid;
-  position: relative;
-  color: aliceblue;
-  grid-template-columns: repeat(5, 1fr);
-  background-image: linear-gradient(
-    #76c9e7 0%,
-    #39687e 35%,
-    #214a44 100%
-  );
-}
-
-.top {
-  text-align: center;
-  color: aliceblue;
-  background-color: rgb(5, 75, 54);
-} */
 </style>

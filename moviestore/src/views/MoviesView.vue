@@ -23,7 +23,10 @@ const toggleModal = (id) => {
     </div>
     <div v-if="store.movies" class="tiles-container">
       <div v-for="movie in store.movies" class="movie-tile">
-        <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster}`" @click="toggleModal(movie.id)">
+        <img
+          :src="`https://image.tmdb.org/t/p/w500/${movie.poster}`"
+          @click="toggleModal(movie.id)"
+        />
       </div>
     </div>
   </div>

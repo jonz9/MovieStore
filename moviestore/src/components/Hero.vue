@@ -1,9 +1,8 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div id="hero-container">
-    <img class="heroImg" src="therock_eyebrow.jpg" alt="hero_picture">
+    <img class="heroImg" src="therock_eyebrow.jpg" alt="hero_picture" />
     <h3></h3>
   </div>
 </template>
@@ -13,7 +12,7 @@
   width: 100vw;
   height: 80vh;
   display: flex;
-  background-color: #093A3E;
+  background-color: #093a3e;
   justify-content: center;
   align-items: center;
 }

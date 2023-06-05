@@ -1,6 +1,6 @@
 <script setup>
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const router = useRouter();
 const user = ref("");
@@ -8,11 +8,11 @@ const password = ref("");
 
 const login = () => {
   if (user.value === "tmdb" && password.value === "movies") {
-    router.push('/movies');
+    router.push("/movies");
   } else {
     alert("Invalid!");
   }
-}
+};
 </script>
 
 <template>
@@ -30,10 +30,10 @@ const login = () => {
         </div>
         <div class="login-buttons">
           <input class="buttons" type="submit" value="Login" />
-          <button class= "buttons" @click="router.push('/')">Back</button>
+          <button class="buttons" @click="router.push('/')">Back</button>
         </div>
       </form>
-    </div>    
+    </div>
   </div>
 </template>
 
@@ -75,7 +75,7 @@ const login = () => {
   gap: 0.5em;
 }
 
-input[type=text] {
+input[type="text"] {
   height: 25px;
 }
 

@@ -5,7 +5,13 @@
     <p>Email: john.zhang4@student.tdsb.on.ca</p>
     <p>#: (416) 396-6675</p>
     <p>Address: 2020 Midland Ave</p>
-    <p><a target="_blank" href="https://www.linkedin.com/in/john-zhang-2665b9236/">LinkedIn</a></p>
+    <p>
+      <a
+        target="_blank"
+        href="https://www.linkedin.com/in/john-zhang-2665b9236/"
+        >LinkedIn</a
+      >
+    </p>
     <p><a target="_blank" href="myresume.pdf">Resume</a></p>
   </div>
 </template>

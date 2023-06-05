@@ -21,7 +21,7 @@ store.movies = movies.results.map((movie) => {
   return {
     id: movie.id,
     poster: movie.poster_path,
-  }
+  };
 });
 </script>
 

@@ -10,7 +10,7 @@ const movieData = (
     params: {
       api_key: `e552c8258b3f71b20f3fc069ca964a73`,
       include_adult: false,
-    }
+    },
   })
 ).data;
 </script>
@@ -21,18 +21,25 @@ const movieData = (
       <div class="modal-container">
         <button class="exit-button" @click="$emit('toggleModal')">X</button>
         <div class="movie" v-if="movieData">
-          <img :src="`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`" />
+          <img
+            :src="`https://image.tmdb.org/t/p/w500/${movieData.poster_path}`"
+          />
           <div class="movie-info">
             <h1 id="title">{{ movieData.title }}</h1>
-            <br>
+            <br />
             <h4>Average Score:{{ movieData.vote_average }}</h4>
             <h4>Runtime: {{ movieData.runtime }}</h4>
             <h4>Revenue: ${{ movieData.revenue }}</h4>
             <h4>Release Date: {{ movieData.release_date }}</h4>
             <h4>Genre: {{ movieData.genres[0].name }}</h4>
-            <br>
+            <br />
             <p>Synopsis: {{ movieData.overview }}</p>
-            <button class="buy-button" @click="store.addToCart(movieData.poster_path, movieData.title)">Buy</button>
+            <button
+              class="buy-button"
+              @click="store.addToCart(movieData.poster_path, movieData.title)"
+            >
+              Buy
+            </button>
           </div>
         </div>
       </div>
@@ -77,7 +84,7 @@ const movieData = (
   width: clamp(280px, 100%, 900px);
   height: 50vh;
   position: relative;
-  color: antiquewhite;   
+  color: antiquewhite;
 }
 
 .exit-button {
