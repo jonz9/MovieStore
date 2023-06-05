@@ -19,7 +19,10 @@ const toggleModal = (id) => {
   <div id="movies-page">
     <div class="movies-header">
       <h1>Movies Page</h1>
-      <button @click="router.push('/checkout')">Checkout</button>
+      <div class="buttons">
+        <button @click="router.push('/checkout')">Checkout</button>
+        <button @click="router.push('/login')">Back</button>
+      </div>
     </div>
     <div v-if="store.movies" class="tiles-container">
       <div v-for="movie in store.movies" class="movie-tile">
@@ -49,6 +52,9 @@ const toggleModal = (id) => {
   margin-bottom: 20px;
 }
 
+.buttons {
+  gap: 2em;
+}
 .movies-header button {
   height: 2em;
   width: 5em;

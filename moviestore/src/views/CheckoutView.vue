@@ -14,9 +14,9 @@ const router = useRouter();
       <button class="back-button" @click="router.push('/movies')">Back</button>
     </div>
     <div class="movie-checkout">
-      <div v-for="movie in store.cart">
-        <h1>{{ movie.title }}</h1>
+      <div class="cart-container" v-for="movie in store.cart">
         <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster}`" />
+        <h2>{{ movie.title }}</h2>
       </div>
     </div>
   </div>
@@ -24,13 +24,15 @@ const router = useRouter();
 
 <style scoped>
 img {
-  height: 15em;
+  height: 13em;
 }
 
 #checkout-page {
-  background: linear-gradient(120deg, #eef8f9, #ccffff);
-  justify-content: center;
+  background: linear-gradient(120deg, #05292c, #0a9595);
+  height: 100vh;
+  width: 100vw;
   align-items: center;
+  justify-content: center;
 }
 
 .checkout-header {
@@ -44,9 +46,20 @@ img {
 }
 
 .movie-checkout {
+  background: linear-gradient(120deg, #eef8f9, #ccffff);
   margin: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5em;
+  padding: 3em;
 }
 
+.cart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .back-button {
   position: absolute;
   top: 2em;
