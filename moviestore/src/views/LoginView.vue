@@ -1,38 +1,84 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useStore } from "../stores";
+import { auth, firestore } from "../firebase";
+import { getDoc, doc } from "@firebase/firestore";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
+const store = useStore();
 const router = useRouter();
-const user = ref("");
-const password = ref("");
+const emailRegister = ref("");
+const emailLogin = ref("");
+const passwordOneRegister = ref("");
+const passwordOneLogin = ref("");
+const passwordTwo = ref("");
 
-const login = () => {
-  if (user.value === "tmdb" && password.value === "movies") {
-    router.push("/movies");
-  } else {
-    alert("Invalid!");
+const registerEmail = async () => {
+  if (passwordOne.value !== passwordTwo.value) {
+    alert("Password Confirmation Failed! You Stink!");
+    return;
+  }
+
+  const { user } = await createUserWithEmailAndPassword(
+    auth,
+    email.value,
+    passwordOne.value
+  );
+  store.user = user;
+  router.push('/movies');
+}
+
+const loginEmail = async () => {
+  try {
+    const { user } = await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      passwordOne.value
+    );
+    store.user = user;
+    router.push('/movies')
+  } catch(error) {
+    console.log(error);
   }
 };
+
+const registerGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const { user } = await signInWithPopup(auth, provider);
+  store.user = user;
+  router.push('/movies');
+  const { cart } = (await getDoc(doc(firestore, "carts", user.email))).data();
+  store.cart = cart;
+}
+
 </script>
 
 <template>
   <div id="login-page">
     <div class="login-container">
-      <h1>LOGIN</h1>
-      <form @submit.prevent="login()">
-        <div class="input-field">
-          <input type="text" placeholder="tmdb" v-model="user" required />
-          <label>Username</label>
-        </div>
-        <div class="input-field">
-          <input type="text" placeholder="movies" v-model="password" required />
-          <label>Password</label>
-        </div>
-        <div class="login-buttons">
-          <input class="buttons" type="submit" value="Login" />
-          <button class="buttons" @click="router.push('/')">Back</button>
-        </div>
+      <form class="userInfo" @submit.prevent="registerEmail()">
+        <h1>Register With Email</h1>
+        <input v-model="emailRegister" type="email" placeholder="Enter Email" />
+        <input v-model="passwordOneRegister" type="password" placeholder="Choose A Password" />
+        <input v-model="passwordTwo" type="password" placeholder="Confirm Password" />
+        <input class="login-buttons" type="submit" value="Register" />
       </form>
+      <form class="userInfo">
+        <h1>Login With Email</h1>  
+        <input v-model="emailLogin" type="email" placeholder="Email" />
+        <input v-model="passwordOneLogin" type="password" placeholder="Password" />
+        <input class="login-buttons" type="submit" value="Login" />
+      </form>
+    </div>
+    <div class="main-buttons">
+      <button class="buttons" @click="registerGoogle()">Register</button>
+      <button class="buttons" @click="router.push('/')">Back</button>
     </div>
   </div>
 </template>
@@ -43,17 +89,20 @@ const login = () => {
   width: 100vw;
   background: linear-gradient(120deg, #05292c, #0a9595);
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
 }
 
 .login-container {
-  height: 20em;
-  width: 20em;
+  height: 25em;
+  width: 25em;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: start;
+  padding: 2.5em;
   border-radius: 8%;
   background-color: #cdf9fb;
   font-family: montserrat;
@@ -63,25 +112,33 @@ const login = () => {
   box-shadow: 4px 4px rgb(0, 0, 0);
 }
 
-.input-field {
+.userInfo {
   display: flex;
-  padding: 0.2em;
-  gap: 0.2em;
+  flex-direction: column;
+  align-items: start;
 }
-
 .login-buttons {
   display: flex;
   padding: 0.2em;
   gap: 0.5em;
 }
 
-input[type="text"] {
+input {
   height: 25px;
+  padding: 0.3em;
+  margin: 0.1em;
+}
+
+.main-buttons {
+  position: relative;
+  bottom: 4em;
+  left: 7em;
 }
 
 .buttons {
-  height: 25px;
-  width: 50px;
+  height: 35px;
+  width: 60px;
+  margin: 0.1em;
   background-color: #1d4548;
   color: antiquewhite;
   border-radius: 10%;
