@@ -18,7 +18,7 @@ const emailLogin = ref("");
 const passwordOneRegister = ref("");
 const passwordOneLogin = ref("");
 const passwordTwo = ref("");
-const passwordCheck = ref(true);
+let passwordCheck = ref(true);
 
 const registerEmail = async () => {
   if (passwordOneRegister.value !== passwordTwo.value) {
@@ -39,13 +39,14 @@ const loginEmail = async () => {
   try {
     const { user } = await signInWithEmailAndPassword(
       auth,
-      email.value,
-      passwordOne.value
+      emailLogin.value,
+      passwordOneLogin.value
     );
     store.user = user;
     router.push('/movies');
   } catch(error) {
     passwordCheck = !passwordCheck;
+    console.log(error);
   }
 };
 
@@ -75,7 +76,7 @@ const registerGoogle = async () => {
         <input v-model="emailLogin" type="email" placeholder="Email" />
         <input v-model="passwordOneLogin" type="password" placeholder="Password" />
         <input class="login-buttons" type="submit" value="Login" />
-        <h5 v-if="passwordCheck">Invalid Username Or Password!</h5>
+        <h5 v-if="!passwordCheck">Invalid Username Or Password!</h5>
       </form>
     </div>
     <div class="main-buttons">

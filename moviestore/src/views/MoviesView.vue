@@ -5,7 +5,7 @@ import Modal from "../components/Modal.vue";
 import { ref } from "vue";
 
 const router = useRouter();
-const genre = ref(8);
+const genres = ref(8);
 const search = ref("");
 const movies = ref(null);
 const page = ref(1);
@@ -95,11 +95,11 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
   </div>
   <Modal v-if="showModal" :id="selectedRecordId" @toggleModal="toggleModal()" />
   <div class="page-footer">
-    <button @clicked="getTMDBData(currentURL, {
+    <button @click="getTMDBData(currentURL, {
       query: search,
     }, page === 1 ? 1 : page--)">Prev</button>
     <p>{{ `Page ${page} of ${totalPages}` }}</p>
-    <button @clicked="getTMDBData(currentURL, {
+    <button @click="getTMDBData(currentURL, {
       query: search,
     }, page >= totalPages ? totalPages : page++)">Next</button>
   </div>

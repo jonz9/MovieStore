@@ -18,10 +18,13 @@ export const useStore = defineStore('store', {
     },
     async removeFromCart(poster, title) {
 
-      this.cart.delete({
-        poster, 
-        title,
-      });
+      const j = 0
+      for (; j < this.cart.length; j++) {
+        if (this.cart[j][0] === poster) {
+          break;
+        }
+      }
+      this.cart.splice(j, 1);
     }
   }
 });
