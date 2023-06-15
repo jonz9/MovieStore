@@ -1,5 +1,4 @@
 <script setup>
-import { useStore } from "../stores/index.js";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import Modal from "../components/Modal.vue";
@@ -37,6 +36,8 @@ const getTMDBData = async (url, options, page) => {
   totalPages.value = movies.value.total_pages;
   currentURL.value = url;
 };
+
+getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
 </script>
 
 <template>
@@ -44,33 +45,37 @@ const getTMDBData = async (url, options, page) => {
     <div class="movies-header">
       <div class="main-controls">
         <h1>Movies</h1>
-        <input type="search" placeholder="Search Movies..." v-model="search" />
-        <button
-          @click="
-            getTMDBData('https://api.themoviedb.org/3/search/movie', {
-              query: search,
-            })"
-        >
-          Search
-        </button>
-        <select v-model="genres">
-          <option value="28">Action</option>
-          <option value="10751">Family</option>
-          <option value="878">Science Fiction</option>
-          <option value="37">Western</option>
-          <option value="99">Documentary</option>
-          <option value="9648">Mystery</option>
-          <option value="18">Drama</option>
-          <option value="10749">Romance</option>
-        </select>
-        <button
-          @click="
-            getTMDBData('https://api.themoviedb.org/3/discover/movie', {
-              with_genres: genres,
-            })"
-        >
-          Get Movies
-        </button>
+        <div>
+          <input class="input" type="search" placeholder="Search Movies..." v-model="search" />
+          <button
+            @click="
+              getTMDBData('https://api.themoviedb.org/3/search/movie', {
+                query: search,
+              })"
+          >
+            Search
+          </button>
+        </div>
+        <div>
+          <select class="input" v-model="genres">
+            <option value="28">Action</option>
+            <option value="10751">Family</option>
+            <option value="878">Science Fiction</option>
+            <option value="37">Western</option>
+            <option value="35">Comedy</option>
+            <option value="9648">Mystery</option>
+            <option value="18">Drama</option>
+            <option value="80">Crime</option>
+          </select>
+          <button
+            @click="
+              getTMDBData('https://api.themoviedb.org/3/discover/movie', {
+                with_genres: genres,
+              })"
+          >
+            Get Movies
+          </button>
+        </div>
       </div>
 
       <div class="buttons">
@@ -89,7 +94,15 @@ const getTMDBData = async (url, options, page) => {
     </div>
   </div>
   <Modal v-if="showModal" :id="selectedRecordId" @toggleModal="toggleModal()" />
-  <div class="page-footer"></div>
+  <div class="page-footer">
+    <button @clicked="getTMDBData(currentURL, {
+      query: search,
+    }, page === 1 ? 1 : page--)">Prev</button>
+    <p>{{ `Page ${page} of ${totalPages}` }}</p>
+    <button @clicked="getTMDBData(currentURL, {
+      query: search,
+    }, page >= totalPages ? totalPages : page++)">Next</button>
+  </div>
 </template>
 
 <style scoped>
@@ -98,6 +111,12 @@ const getTMDBData = async (url, options, page) => {
   justify-content: center;
   align-items: center;
 }
+
+h1 {
+  text-decoration: underline;
+  text-shadow: 2px 2px #77dada
+}
+
 .movies-header {
   display: flex;
   justify-content: space-between;
@@ -106,6 +125,15 @@ const getTMDBData = async (url, options, page) => {
   background-color: #011112;
   color: antiquewhite;
   margin-bottom: 20px;
+}
+
+.main-controls {
+  display: flex;
+  gap: 2em;
+}
+
+.input {
+  height: 2.9em;
 }
 
 .movies-header button {
@@ -127,12 +155,25 @@ const getTMDBData = async (url, options, page) => {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
 }
+
 .movie-tile {
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 img {
   width: 200px;
+}
+
+.page-footer {
+  display: flex;
+  position: relative;
+  bottom: 3;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  background-color: #05292c;
+  color: antiquewhite;
 }
 </style>

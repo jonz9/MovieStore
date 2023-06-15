@@ -18,17 +18,18 @@ const emailLogin = ref("");
 const passwordOneRegister = ref("");
 const passwordOneLogin = ref("");
 const passwordTwo = ref("");
+const passwordCheck = ref(true);
 
 const registerEmail = async () => {
-  if (passwordOne.value !== passwordTwo.value) {
+  if (passwordOneRegister.value !== passwordTwo.value) {
     alert("Password Confirmation Failed! You Stink!");
     return;
   }
 
   const { user } = await createUserWithEmailAndPassword(
     auth,
-    email.value,
-    passwordOne.value
+    emailRegister.value,
+    passwordOneRegister.value
   );
   store.user = user;
   router.push('/movies');
@@ -42,9 +43,9 @@ const loginEmail = async () => {
       passwordOne.value
     );
     store.user = user;
-    router.push('/movies')
+    router.push('/movies');
   } catch(error) {
-    console.log(error);
+    passwordCheck = !passwordCheck;
   }
 };
 
@@ -69,15 +70,16 @@ const registerGoogle = async () => {
         <input v-model="passwordTwo" type="password" placeholder="Confirm Password" />
         <input class="login-buttons" type="submit" value="Register" />
       </form>
-      <form class="userInfo">
+      <form class="userInfo" @submit.prevent="loginEmail()">
         <h1>Login With Email</h1>  
         <input v-model="emailLogin" type="email" placeholder="Email" />
         <input v-model="passwordOneLogin" type="password" placeholder="Password" />
         <input class="login-buttons" type="submit" value="Login" />
+        <h5 v-if="passwordCheck">Invalid Username Or Password!</h5>
       </form>
     </div>
     <div class="main-buttons">
-      <button class="buttons" @click="registerGoogle()">Register</button>
+      <button class="buttons" @click="registerGoogle()">Google</button>
       <button class="buttons" @click="router.push('/')">Back</button>
     </div>
   </div>
