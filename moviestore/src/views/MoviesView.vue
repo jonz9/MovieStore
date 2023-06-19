@@ -46,12 +46,18 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
       <div class="main-controls">
         <h1>Movies</h1>
         <div>
-          <input class="input" type="search" placeholder="Search Movies..." v-model="search" />
+          <input
+            class="input"
+            type="search"
+            placeholder="Search Movies..."
+            v-model="search"
+          />
           <button
             @click="
               getTMDBData('https://api.themoviedb.org/3/search/movie', {
                 query: search,
-              })"
+              })
+            "
           >
             Search
           </button>
@@ -71,7 +77,8 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
             @click="
               getTMDBData('https://api.themoviedb.org/3/discover/movie', {
                 with_genres: genres,
-              })"
+              })
+            "
           >
             Get Movies
           </button>
@@ -95,13 +102,33 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
   </div>
   <Modal v-if="showModal" :id="selectedRecordId" @toggleModal="toggleModal()" />
   <div class="page-footer">
-    <button @click="getTMDBData(currentURL, {
-      query: search,
-    }, page === 1 ? 1 : page--)">Prev</button>
+    <button
+      @click="
+        getTMDBData(
+          currentURL,
+          {
+            query: search,
+          },
+          page === 1 ? 1 : page--
+        )
+      "
+    >
+      Prev
+    </button>
     <p>{{ `Page ${page} of ${totalPages}` }}</p>
-    <button @click="getTMDBData(currentURL, {
-      query: search,
-    }, page >= totalPages ? totalPages : page++)">Next</button>
+    <button
+      @click="
+        getTMDBData(
+          currentURL,
+          {
+            query: search,
+          },
+          page >= totalPages ? totalPages : page++
+        )
+      "
+    >
+      Next
+    </button>
   </div>
 </template>
 
@@ -114,7 +141,7 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
 
 h1 {
   text-decoration: underline;
-  text-shadow: 2px 2px #77dada
+  text-shadow: 2px 2px #77dada;
 }
 
 .movies-header {

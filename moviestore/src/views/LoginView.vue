@@ -18,11 +18,11 @@ const emailLogin = ref("");
 const passwordOneRegister = ref("");
 const passwordOneLogin = ref("");
 const passwordTwo = ref("");
-let passwordCheck = ref(true);
+const passwordCheck = ref(true);
 
 const registerEmail = async () => {
   if (passwordOneRegister.value !== passwordTwo.value) {
-    alert("Password Confirmation Failed! You Stink!");
+    alert("Passwords Do Not Match! Try Again!");
     return;
   }
 
@@ -32,8 +32,8 @@ const registerEmail = async () => {
     passwordOneRegister.value
   );
   store.user = user;
-  router.push('/movies');
-}
+  router.push("/movies");
+};
 
 const loginEmail = async () => {
   try {
@@ -43,10 +43,11 @@ const loginEmail = async () => {
       passwordOneLogin.value
     );
     store.user = user;
-    router.push('/movies');
-  } catch(error) {
+    router.push("/movies");
+  } catch (error) {
     passwordCheck = !passwordCheck;
     console.log(error);
+    alert("you suck");
   }
 };
 
@@ -54,11 +55,12 @@ const registerGoogle = async () => {
   const provider = new GoogleAuthProvider();
   const { user } = await signInWithPopup(auth, provider);
   store.user = user;
-  router.push('/movies');
-  const { cart } = (await getDoc(doc(firestore, "carts", user.email))).data();
+  router.push("/movies");
+  const { cart } = (
+    await getDoc(doc(firestore, "carts", user.emailRegister))
+  ).data();
   store.cart = cart;
-}
-
+};
 </script>
 
 <template>
@@ -67,14 +69,26 @@ const registerGoogle = async () => {
       <form class="userInfo" @submit.prevent="registerEmail()">
         <h1>Register With Email</h1>
         <input v-model="emailRegister" type="email" placeholder="Enter Email" />
-        <input v-model="passwordOneRegister" type="password" placeholder="Choose A Password" />
-        <input v-model="passwordTwo" type="password" placeholder="Confirm Password" />
+        <input
+          v-model="passwordOneRegister"
+          type="password"
+          placeholder="Choose A Password"
+        />
+        <input
+          v-model="passwordTwo"
+          type="password"
+          placeholder="Confirm Password"
+        />
         <input class="login-buttons" type="submit" value="Register" />
       </form>
       <form class="userInfo" @submit.prevent="loginEmail()">
-        <h1>Login With Email</h1>  
+        <h1>Login With Email</h1>
         <input v-model="emailLogin" type="email" placeholder="Email" />
-        <input v-model="passwordOneLogin" type="password" placeholder="Password" />
+        <input
+          v-model="passwordOneLogin"
+          type="password"
+          placeholder="Password"
+        />
         <input class="login-buttons" type="submit" value="Login" />
         <h5 v-if="!passwordCheck">Invalid Username Or Password!</h5>
       </form>
