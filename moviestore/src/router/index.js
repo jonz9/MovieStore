@@ -16,6 +16,10 @@ export const router = createRouter({
       component: LoginView,
     },
     {
+      path: "/register",
+      component: RegisterView,
+    },
+    {
       path: "/movies",
       component: MoviesView,
     },
