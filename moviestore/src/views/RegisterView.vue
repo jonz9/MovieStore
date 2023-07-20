@@ -17,17 +17,21 @@ const passwordOneRegister = ref("");
 const passwordTwo = ref("");
 
 const registerEmail = async () => {
-  if (passwordOneRegister.value !== passwordTwo.value) {
-    alert("Passwords Do Not Match! Try Again!");
-    return;
+  try {
+    if (passwordOneRegister.value !== passwordTwo.value) {
+      alert("Passwords Do Not Match! Try Again!");
+      return;
+    }
+    const { user } = await createUserWithEmailAndPassword(
+      auth,
+      emailRegister.value,
+      passwordOneRegister.value
+    );
+    store.user = user;
+    router.push("/movies");
+  } catch (error) {
+    alert(error);
   }
-  const { user } = await createUserWithEmailAndPassword(
-    auth,
-    emailRegister.value,
-    passwordOneRegister.value
-  );
-  store.user = user;
-  router.push("/movies");
 };
 
 const registerGoogle = async () => {

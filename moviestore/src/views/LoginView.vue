@@ -3,7 +3,6 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useStore } from "../stores";
 import { auth, firestore } from "../firebase";
-import { getDoc, doc } from "@firebase/firestore";
 import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
@@ -12,7 +11,7 @@ const store = useStore();
 const router = useRouter();
 const emailLogin = ref("");
 const passwordLogin = ref("");
-let passwordCheck = ref(true);
+const wrongPassword = ref(false)
 
 const loginEmail = async () => {
   try {
@@ -24,9 +23,9 @@ const loginEmail = async () => {
     store.user = user;
     router.push("/movies");
   } catch (error) {
-    passwordCheck = !passwordCheck;
+    wrongPassword = !wrongPassword;
+    alert(error);
     console.log(error);
-    alert("you suck");
   }
 };
 </script>
@@ -44,7 +43,7 @@ const loginEmail = async () => {
           placeholder="Password"
         />
         <input type='submit' value="Login" />
-        <h5 v-if="!passwordCheck">Invalid Username Or Password!</h5>
+        <h5 v-if="wrongPassword">Invalid Username Or Password!</h5>
       </form>
       <p>-----------------New to MovieStore?---------------</p>
       <br>

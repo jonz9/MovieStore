@@ -25,7 +25,6 @@ export const useStore = defineStore("store", {
           this.cart.splice(j, 1);
         }
       }
-
       await setDoc(doc(firestore, "carts", this.user.email), {
         cart: this.cart,
       });
