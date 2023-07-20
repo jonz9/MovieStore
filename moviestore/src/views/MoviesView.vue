@@ -10,7 +10,7 @@ const search = ref("");
 const movies = ref(null);
 const page = ref(1);
 const currentURL = ref("");
-const totalPages = ref(0);
+const totalPages = ref(1);
 const showModal = ref(false);
 const selectedRecordId = ref(0);
 
@@ -105,10 +105,9 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
     <button
       @click="
         getTMDBData(
-          currentURL,
-          {
-            query: search,
-          },
+          currentURL, { 
+            query: search 
+          }, 
           page === 1 ? 1 : page--
         )
       "
@@ -119,9 +118,8 @@ getTMDBData("https://api.themoviedb.org/3/movie/popular", {});
     <button
       @click="
         getTMDBData(
-          currentURL,
-          {
-            query: search,
+          currentURL, { 
+            query: search 
           },
           page >= totalPages ? totalPages : page++
         )
@@ -196,6 +194,7 @@ img {
 .page-footer {
   display: flex;
   position: relative;
+  height: 60px;
   bottom: 3;
   justify-content: center;
   align-items: center;

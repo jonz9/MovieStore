@@ -5,42 +5,21 @@ import { useStore } from "../stores";
 import { auth, firestore } from "../firebase";
 import { getDoc, doc } from "@firebase/firestore";
 import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const store = useStore();
 const router = useRouter();
-const emailRegister = ref("");
 const emailLogin = ref("");
-const passwordOneRegister = ref("");
-const passwordOneLogin = ref("");
-const passwordTwo = ref("");
-const passwordCheck = ref(true);
-
-const registerEmail = async () => {
-  if (passwordOneRegister.value !== passwordTwo.value) {
-    alert("Passwords Do Not Match! Try Again!");
-    return;
-  }
-
-  const { user } = await createUserWithEmailAndPassword(
-    auth,
-    emailRegister.value,
-    passwordOneRegister.value
-  );
-  store.user = user;
-  router.push("/movies");
-};
+const passwordLogin = ref("");
+let passwordCheck = ref(true);
 
 const loginEmail = async () => {
   try {
     const { user } = await signInWithEmailAndPassword(
       auth,
       emailLogin.value,
-      passwordOneLogin.value
+      passwordLogin.value
     );
     store.user = user;
     router.push("/movies");
@@ -50,52 +29,29 @@ const loginEmail = async () => {
     alert("you suck");
   }
 };
-
-const registerGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  const { user } = await signInWithPopup(auth, provider);
-  store.user = user;
-  router.push("/movies");
-  const { cart } = (
-    await getDoc(doc(firestore, "carts", user.emailRegister))
-  ).data();
-  store.cart = cart;
-};
 </script>
 
 <template>
   <div id="login-page">
     <div class="login-container">
-      <form class="userInfo" @submit.prevent="registerEmail()">
-        <h1>Register With Email</h1>
-        <input v-model="emailRegister" type="email" placeholder="Enter Email" />
-        <input
-          v-model="passwordOneRegister"
-          type="password"
-          placeholder="Choose A Password"
-        />
-        <input
-          v-model="passwordTwo"
-          type="password"
-          placeholder="Confirm Password"
-        />
-        <input class="login-buttons" type="submit" value="Register" />
-      </form>
       <form class="userInfo" @submit.prevent="loginEmail()">
-        <h1>Login With Email</h1>
+        <h1>Login</h1>
+        <p>Sign In With Email</p>
         <input v-model="emailLogin" type="email" placeholder="Email" />
         <input
-          v-model="passwordOneLogin"
+          v-model="passwordLogin"
           type="password"
           placeholder="Password"
         />
-        <input class="login-buttons" type="submit" value="Login" />
+        <input type='submit' value="Login" />
         <h5 v-if="!passwordCheck">Invalid Username Or Password!</h5>
       </form>
-    </div>
-    <div class="main-buttons">
-      <button class="buttons" @click="registerGoogle()">Google</button>
-      <button class="buttons" @click="router.push('/')">Back</button>
+      <p>-----------------New to MovieStore?---------------</p>
+      <br>
+      <div class="button-menu">
+        <button class="buttons" @click="router.push('/register')">Register</button>
+        <button class="buttons" @click="router.push('/')">Back</button>
+      </div>
     </div>
   </div>
 </template>
@@ -120,7 +76,7 @@ const registerGoogle = async () => {
   justify-content: center;
   align-items: start;
   padding: 2.5em;
-  border-radius: 8%;
+  border-radius: 20px;
   background-color: #cdf9fb;
   font-family: montserrat;
   border-color: #010303;
@@ -129,35 +85,55 @@ const registerGoogle = async () => {
   box-shadow: 4px 4px rgb(0, 0, 0);
 }
 
+h1 {
+  margin: 0 0 0.2em 0;
+  font-size: 7ch;
+}
 .userInfo {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: start;
 }
-.login-buttons {
-  display: flex;
-  padding: 0.2em;
-  gap: 0.5em;
-}
 
 input {
-  height: 25px;
+  height: 35px;
+  width: 100%;
   padding: 0.3em;
   margin: 0.1em;
 }
 
-.main-buttons {
-  position: relative;
-  bottom: 4em;
-  left: 7em;
+.userInfo > input[type=submit] {
+  margin: 0.5em 0 2em 0;
+  color: rgb(0, 0, 0);
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+
+.userInfo > input[type=submit]:hover {
+  color: antiquewhite;
+  background-color: #1d4548;
+  transition: 0.5s;
+}
+
+.button-menu {
+  display: flex;
+  max-height: 7ch;
+  width: 100%;
 }
 
 .buttons {
-  height: 35px;
-  width: 60px;
+  height: 30px;
   margin: 0.1em;
-  background-color: #1d4548;
+  width: 50%;
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border-radius: 5px;
+}
+
+.buttons:hover {
   color: antiquewhite;
-  border-radius: 10%;
+  background-color: #1d4548;
+  transition: 0.5s;
 }
 </style>
