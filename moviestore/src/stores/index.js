@@ -29,5 +29,13 @@ export const useStore = defineStore("store", {
         cart: this.cart,
       });
     },
+
+    async checkCart(poster, title) {
+      return (this.cart.includes({poster, title,}));
+
+      await setDoc(doc(firestore, "carts", this.user.email), {
+        cart: this.cart,
+      });
+    }
   },
 });

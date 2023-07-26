@@ -16,16 +16,6 @@ const movieData = (
   })
 ).data;
 
-const checkCart = () => {
-  store.cart.forEach((movie) => {
-    if (movieData.poster_path === movie[0]) {
-      console.log("movie in cart");
-      return true;
-    }
-  })
-  return false;
-};
-
 </script>
 
 <template>
@@ -47,7 +37,7 @@ const checkCart = () => {
             <h4>Genre: {{ movieData.genres[0].name }}</h4>
             <br />
             <p>Synopsis: {{ movieData.overview }}</p>
-            <h4 v-if="checkCart">This item is already in your cart!</h4>
+            <h4 v-if="!store.checkCart(movieData.poster_path, movieData.title)">This item is already in your cart!</h4>
             <button
               class="buy-button"
               v-else
