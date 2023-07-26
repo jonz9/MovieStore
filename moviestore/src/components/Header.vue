@@ -6,7 +6,7 @@ const router = useRouter();
 
 <template>
   <div id="header-container">
-    <h1>Welcome to MovieStore!</h1>
+    <h1>MovieStore: The Home to Films of Grandeur </h1>
     <button class="loginButton" @click="router.push('/login')">LOGIN</button>
   </div>
 </template>
@@ -28,14 +28,14 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 30px;
+  padding: 50px;
   background-color: #001011;
 }
 
 .loginButton {
   height: 3em;
   width: 6em;
-  border-radius: 8%;
+  border-radius: 5px;
   background-color: antiquewhite;
 }
 

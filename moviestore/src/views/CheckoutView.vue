@@ -17,6 +17,7 @@ const router = useRouter();
       <div class="cart-container" v-for="movie in store.cart">
         <img :src="`https://image.tmdb.org/t/p/w500/${movie.poster}`" />
         <h2>{{ movie.title }}</h2>
+        <button @click="store.removeFromCart(movie.title)">Remove</button>
       </div>
     </div>
   </div>
@@ -29,8 +30,9 @@ img {
 
 #checkout-page {
   background: linear-gradient(120deg, #05292c, #0a9595);
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
+
   align-items: center;
   justify-content: center;
 }

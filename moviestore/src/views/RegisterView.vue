@@ -1,62 +1,82 @@
 <script setup>
-import { useRouter } from "vue-router";
-import { ref } from "vue";
-import { useStore } from "../stores";
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useStore } from '../stores';
 import { auth, firestore } from "../firebase";
+import { getDoc, doc } from "@firebase/firestore";
 import {
-  signInWithEmailAndPassword,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
 } from "firebase/auth";
 
 const store = useStore();
 const router = useRouter();
-const emailLogin = ref("");
-const passwordLogin = ref("");
-const wrongPassword = ref(false)
+const emailRegister = ref("");
+const passwordOneRegister = ref("");
+const passwordTwo = ref("");
 
-const loginEmail = async () => {
+const registerEmail = async () => {
   try {
-    const { user } = await signInWithEmailAndPassword(
+    if (passwordOneRegister.value !== passwordTwo.value) {
+      alert("Passwords Do Not Match! Try Again!");
+      return;
+    }
+    const { user } = await createUserWithEmailAndPassword(
       auth,
-      emailLogin.value,
-      passwordLogin.value
+      emailRegister.value,
+      passwordOneRegister.value
     );
     store.user = user;
     router.push("/movies");
   } catch (error) {
-    wrongPassword = !wrongPassword;
     alert(error);
-    console.log(error);
   }
+};
+
+const registerGoogle = async () => {
+  const provider = new GoogleAuthProvider();
+  const { user } = await signInWithPopup(auth, provider);
+  store.user = user;
+  router.push("/movies");
+  const { cart } = (
+    await getDoc(doc(firestore, "carts", user.emailRegister))
+  ).data();
+  store.cart = cart;
 };
 </script>
 
 <template>
-  <div id="login-page">
-    <div class="login-container">
-      <form class="userInfo" @submit.prevent="loginEmail()">
-        <h1>Login</h1>
-        <p>Sign In With Email</p>
-        <input v-model="emailLogin" type="email" placeholder="Email" />
+  <div class="register-page">
+    <div class="register-container">
+      <form class="userInfo" @submit.prevent="registerEmail()">
+        <h1>Register</h1>
+        <p>Register Via Email</p>
+        <input v-model="emailRegister" type="email" placeholder="Enter Email" />
         <input
-          v-model="passwordLogin"
+          v-model="passwordOneRegister"
           type="password"
-          placeholder="Password"
+          placeholder="Choose A Password"
         />
-        <input type='submit' value="Login" />
-        <h5 v-if="wrongPassword">Invalid Username Or Password!</h5>
+        <input
+          v-model="passwordTwo"
+          type="password"
+          placeholder="Confirm Password"
+        />
+        <input class="login-buttons" type="submit" value="Register" />
+
+        <p>Register Via Google</p>
       </form>
-      <p>-----------------New to MovieStore?---------------</p>
-      <br>
       <div class="button-menu">
-        <button class="buttons" @click="router.push('/register')">Register</button>
-        <button class="buttons" @click="router.push('/')">Back</button>
+        <button class="buttons" @click="registerGoogle()">Google</button>
+        <button class="buttons" @click="router.push('/login')">Back</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-#login-page {
+.register-page {
   height: 100vh;
   width: 100vw;
   background: linear-gradient(120deg, #05292c, #0a9595);
@@ -67,8 +87,8 @@ const loginEmail = async () => {
   align-items: center;
 }
 
-.login-container {
-  height: 25em;
+.register-container {
+  height: 40em;
   width: 25em;
   display: flex;
   flex-direction: column;
@@ -135,4 +155,6 @@ input {
   background-color: #1d4548;
   transition: 0.5s;
 }
+
+
 </style>

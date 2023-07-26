@@ -2,7 +2,7 @@
 
 <template>
   <div id="hero-container">
-    <img class="heroImg" src="therock_eyebrow.jpg" alt="hero_picture" />
+    <img class="heroImg" src="src/misc/hero-pic.jpg" alt="hero_picture" />
     <h3></h3>
   </div>
 </template>
@@ -18,7 +18,7 @@
 }
 
 .heroImg {
-  height: 25em;
-  width: 45em;
+  height: 100%;
+  width: 100%;
 }
 </style>

@@ -1,9 +1,11 @@
 <script setup>
 import { useStore } from "../stores";
 import axios from "axios";
+import { ref } from "vue";
 
 const store = useStore();
 const props = defineProps(["id"]);
+const inCart = ref(false);
 
 const movieData = (
   await axios.get(`https://api.themoviedb.org/3/movie/${props.id}`, {
@@ -13,6 +15,7 @@ const movieData = (
     },
   })
 ).data;
+
 </script>
 
 <template>
@@ -34,8 +37,10 @@ const movieData = (
             <h4>Genre: {{ movieData.genres[0].name }}</h4>
             <br />
             <p>Synopsis: {{ movieData.overview }}</p>
+            <h4 v-if="!store.checkCart(movieData.poster_path, movieData.title)">This item is already in your cart!</h4>
             <button
               class="buy-button"
+              v-else
               @click="store.addToCart(movieData.poster_path, movieData.title)"
             >
               Buy
@@ -95,6 +100,10 @@ const movieData = (
   background: #b40000;
   font-weight: bold;
   border-radius: 5%;
+}
+
+h4 {
+  color: antiquewhite;
 }
 
 .buy-button {
