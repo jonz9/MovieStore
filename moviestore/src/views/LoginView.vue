@@ -3,15 +3,13 @@ import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useStore } from "../stores";
 import { auth, firestore } from "../firebase";
-import {
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const store = useStore();
 const router = useRouter();
 const emailLogin = ref("");
 const passwordLogin = ref("");
-const wrongPassword = ref(false)
+let wrongPassword = ref(false);
 
 const loginEmail = async () => {
   try {
@@ -37,18 +35,16 @@ const loginEmail = async () => {
         <h1>Login</h1>
         <p>Sign In With Email</p>
         <input v-model="emailLogin" type="email" placeholder="Email" />
-        <input
-          v-model="passwordLogin"
-          type="password"
-          placeholder="Password"
-        />
-        <input type='submit' value="Login" />
+        <input v-model="passwordLogin" type="password" placeholder="Password" />
+        <input type="submit" value="Login" />
         <h5 v-if="wrongPassword">Invalid Username Or Password!</h5>
       </form>
       <p>-----------------New to MovieStore?---------------</p>
-      <br>
+      <br />
       <div class="button-menu">
-        <button class="buttons" @click="router.push('/register')">Register</button>
+        <button class="buttons" @click="router.push('/register')">
+          Register
+        </button>
         <button class="buttons" @click="router.push('/')">Back</button>
       </div>
     </div>
@@ -102,14 +98,14 @@ input {
   margin: 0.1em;
 }
 
-.userInfo > input[type=submit] {
+.userInfo > input[type="submit"] {
   margin: 0.5em 0 2em 0;
   color: rgb(0, 0, 0);
   background-color: #f0f0f0;
   border-radius: 5px;
 }
 
-.userInfo > input[type=submit]:hover {
+.userInfo > input[type="submit"]:hover {
   color: antiquewhite;
   background-color: #1d4548;
   transition: 0.5s;

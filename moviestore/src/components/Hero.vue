@@ -2,7 +2,7 @@
 
 <template>
   <div id="hero-container">
-    <img class="heroImg" src="src/misc/hero-pic.jpg" alt="hero_picture" />
+    <img class="heroImg" src="../misc/hero-pic.jpg" alt="hero_picture" />
     <h3></h3>
   </div>
 </template>
