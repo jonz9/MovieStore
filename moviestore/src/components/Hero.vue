@@ -1,9 +1,18 @@
-<script setup></script>
+<script>
+import heroPic from "@/misc/hero-pic.jpg";
+
+export default {
+  data() {
+    return {
+      heroPic,
+    };
+  },
+};
+</script>
 
 <template>
   <div id="hero-container">
-    <img class="heroImg" src="src/misc/hero-pic.jpg" alt="hero_picture" />
-    <h3></h3>
+    <img class="heroImg" :src="heroPic" alt="hero_picture" />
   </div>
 </template>
 
